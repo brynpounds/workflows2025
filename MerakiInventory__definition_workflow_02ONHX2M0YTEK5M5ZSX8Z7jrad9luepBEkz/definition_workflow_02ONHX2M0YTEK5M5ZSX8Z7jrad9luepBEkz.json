@@ -1,0 +1,486 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02ONHX2M0YTEK5M5ZSX8Z7jrad9luepBEkz",
+    "name": "Meraki Inventory",
+    "title": "Meraki Inventory",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Error Message",
+          "type": "datatype.string",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": ""
+        },
+        "unique_name": "variable_workflow_02OQYGQX8X2NF3xjPBLoUx03yWVsn2W0aOy",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "display_name": "Meraki Inventory",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "meraki.endpoint",
+        "target_id": "definition_target_02OASIW2D9EIK0VRpS9VyS2JSKwpbCIVXSW",
+        "execute_on_workflow_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02ONI0LAV1EEJ3Dk2YmsKkqXnlcv6ies0X4",
+        "name": "Meraki - Get Organizations",
+        "title": "Meraki - Get Organizations",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "description": "**Cisco Meraki - Get Organizations**\nRetrieve a list of organizations that the authenticated user has access to within their Meraki account. \nAn organization in Meraki represents a logical grouping of networks, devices, and settings that can be managed collectively.\n\n**Target:** A Meraki Endpoint using HTTPS \"api.meraki.com\" port 443 and no path.\n\n**Account Key:** Meraki User API Key. API Key can be generated from Merkai Dashboard -\u003e User Profile -\u003e API Access.",
+          "display_name": "Meraki - Get Organizations",
+          "input": {
+            "variable_workflow_02LXK9KUOD0MH4qj4j062vm12gYmFb9y5N0": 100,
+            "variable_workflow_02LXKBG6HGMSD1YojnHQ3bM2cT6mP8A02A9": "",
+            "variable_workflow_02LXKCCX4AREX6odSHkvY5oECunJtqcLahK": ""
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "target_type": "meraki.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02LV5GIDUTY3X0WhuidM5ZWhkjL8wQCGAPq",
+          "workflow_name": "Meraki - Get Organizations"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OQY4G25B1CV5gFFcy4rSFpDflVmpUZSVV",
+        "name": "Condition Block",
+        "title": "Was Get Organizations Successful?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "conditions": [],
+          "continue_on_failure": false,
+          "description": "If-Else condition block",
+          "display_name": "Was Get Organizations Successful?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_02OQY4G36RF1P4etcUMROGqHjdifikcXsz4",
+            "name": "Condition Branch",
+            "title": "200 Sucessful",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_02ONI0LAV1EEJ3Dk2YmsKkqXnlcv6ies0X4.output.variable_workflow_02LXKZLXKLJFB451gVbqCxrIVfpczDAxuGy$",
+                "operator": "eq",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "200 Sucessful",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity"
+          },
+          {
+            "unique_name": "definition_activity_02OQY4G48OORH2fU4dbQXEoyYqBpXFJ0GVJ",
+            "name": "Condition Branch",
+            "title": "Not 200",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_02ONI0LAV1EEJ3Dk2YmsKkqXnlcv6ies0X4.output.variable_workflow_02LXKZLXKLJFB451gVbqCxrIVfpczDAxuGy$",
+                "operator": "ne",
+                "right_operand": 200
+              },
+              "continue_on_failure": false,
+              "display_name": "Not 200",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_02OQYHTAFO1EQ4UUP6Qg0KIgjB1y7ivFP6C",
+                "name": "Set Variables",
+                "title": "Set Variables",
+                "type": "core.set_multiple_variables",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "description": "Set Variables",
+                  "display_name": "Set Variables",
+                  "skip_execution": false,
+                  "variables_to_update": [
+                    {
+                      "variable_to_update": "$workflow.definition_workflow_02ONHX2M0YTEK5M5ZSX8Z7jrad9luepBEkz.output.variable_workflow_02OQYGQX8X2NF3xjPBLoUx03yWVsn2W0aOy$",
+                      "variable_value_new": "Something went sideways with the Get Organizations function"
+                    }
+                  ]
+                },
+                "object_type": "definition_activity"
+              },
+              {
+                "unique_name": "definition_activity_02OQYJ0O1HSYS1ATYZbwMGpevYB3wnKuEOV",
+                "name": "Completed",
+                "title": "Completed",
+                "type": "logic.completed",
+                "base_type": "activity",
+                "properties": {
+                  "completion_type": "succeeded",
+                  "continue_on_failure": false,
+                  "description": "Completed action",
+                  "display_name": "Completed",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_02ONIDSYI23684Aau3qVspXYlkkh26VfIw9",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "description": "JSONPath Query to get value in JSON",
+          "display_name": "JSONPath Query",
+          "input_json": "$activity.definition_activity_02ONI0LAV1EEJ3Dk2YmsKkqXnlcv6ies0X4.output.variable_workflow_02LXKZA6725S35QBWMZCg1AlZnT11mbSFQi$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "[2][\"id\"]",
+              "jsonpath_query_name": "org_id",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02ONIFS6LMQ8E7aepHrrXkbvBrwqIsd1ZAU",
+        "name": "Meraki - Get Organization Networks",
+        "title": "Meraki - Get Organization Networks",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "**Cisco Meraki - Networks - Get Organization Networks**\n\nList the networks that the user has privileges on in an organization\n\n**Target:** A Meraki Endpoint using HTTPS \"api.meraki.com\" port 443 and no path.\n\n**Account Key:** Meraki User API Key. API Key can be generated from Merkai Dashboard -\u003e User Profile -\u003e API Access.\n\nSteps:\n[] Sends Get Network request to Meraki\n[] Check if the request was successful:\n[]\u003e If it was, attempt to extract the results and set the output variables\n[]\u003e If it wasn't, return the error and marks the workflow as failed.\n\nNOTE: Empty attributes in the request are removed from the payload before sending to Meraki. \n\nMore information about this API: https://developer.cisco.com/meraki/api-v1/get-organization-networks/",
+          "display_name": "Meraki - Get Organization Networks",
+          "input": {
+            "variable_workflow_02L9TZH6C81473IDtFQ0NIzW3jmXrgchtN9": "$activity.definition_activity_02ONIDSYI23684Aau3qVspXYlkkh26VfIw9.output.jsonpath_queries.org_id$",
+            "variable_workflow_02LEUL5GOHN9T53T7jFQx3T2Yo04p5Xuz0r": false,
+            "variable_workflow_02LNK5WW0RD2A20mG7v1G7gsyE2N2RrKdQd": "",
+            "variable_workflow_02LNK5WW0RTCB1AXbOwJOBVWvUx1wdyKtkt": "withAnyTags",
+            "variable_workflow_02LNK5WW0S5E21Q9biFSXTiLbHr7cWP2K7y": false,
+            "variable_workflow_02LNK5WW0SE2H1zmchhUHyfX7L0XGvKmB7W": 1000,
+            "variable_workflow_02LNK5WW0SM7R5SjIvnnytN6vYzR7wfDHeE": [],
+            "variable_workflow_02LNK5WW0STMX38BXiY2IvPQoHQliJHSCgE": [],
+            "variable_workflow_02LNK5WW0T0NX26NyApdlTn355uYJwcQGqW": "",
+            "variable_workflow_02LNK5WW0T92U1HJd1sxzFrmVvwxy7NVaQn": ""
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "target_type": "meraki.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02L9TZH5W95870XebPF2g8kSyIYcawUvljX",
+          "workflow_name": "Meraki - Get Organization Networks"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OQYU21NHIZU0b5kycgVDk9e9ouWDZQrMR",
+        "name": "Meraki - Get Organization Devices",
+        "title": "Meraki - Get Organization Devices",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "**Cisco Meraki - Devices - Get Organization Devices**\n\nList the devices in an organization that have been assigned to networks.\n\n**Target:** A Meraki Endpoint using HTTPS \"api.meraki.com\" port 443 and no path.\n\n**Account Key:** Meraki User API Key. API Key can be generated from Merkai Dashboard -\u003e User Profile -\u003e API Access.\n\nSteps:\n[] Sends Get Network request to Meraki\n[] Check if the request was successful:\n[]\u003e If it was, attempt to extract the results and set the output variables\n[]\u003e If it wasn't, return the error and marks the workflow as failed.\n\nNOTE: Empty attributes in the request are removed from the payload before sending to Meraki. \n\nMore information about this API: https://developer.cisco.com/meraki/api-v1/get-organization-networks/",
+          "display_name": "Meraki - Get Organization Devices",
+          "input": {
+            "variable_workflow_02LBZJE84MKWU3b4u5iWvF5C56j3SWvcLxU": "$activity.definition_activity_02ONIDSYI23684Aau3qVspXYlkkh26VfIw9.output.jsonpath_queries.org_id$",
+            "variable_workflow_02LPD34ABGELX4xRBULzEWn7yZXmlOLnhlm": "",
+            "variable_workflow_02LPD34ABGWM530L7Ref10RR1lIyS6swy7y": "",
+            "variable_workflow_02LPD34ABH4NB5Y3srIX91xn9cIzEY68MMa": "withAnyTags",
+            "variable_workflow_02LPD34ABHCES6OHeiXWIvVmRKLdKquVK4f": [],
+            "variable_workflow_02LPD34ABHKTT7bzR3DO9wR6Jt8QIVkTmKA": [],
+            "variable_workflow_02LPD34ABHUR66qxroFyemfNTX3wjVrx4bB": "",
+            "variable_workflow_02LPD34ABI5767Bipcwnil1zhzAhMVqXU77": "",
+            "variable_workflow_02LPD34ABICWG2rq68sl7VROvFjqB8bmooh": [],
+            "variable_workflow_02LPD34ABIJYH3MHQNXX88Tf38tgg2nnaiV": [],
+            "variable_workflow_02LPD34ABIRIY7ksRBfahOf52zARKfji5tq": "",
+            "variable_workflow_02LPD34ABIZNM1hpRmCW4fNi50a79mCW4oF": 1000,
+            "variable_workflow_02LPD34ABJ73Y1vUpFZq8UjZK37FVXisvfT": "",
+            "variable_workflow_02LPD34ABJFEJ26DNauhcFei0QIVgWIgCYw": [],
+            "variable_workflow_02LPD34ABJV2C0tJTsG5KJNoU4RZ9yRWNBC": [],
+            "variable_workflow_02LPD34ABK6IH5MaynNsHWnm1mpCQw0TkyQ": [],
+            "variable_workflow_02LPD34ABKF695YGotxETEugS06mLWBlnVr": [],
+            "variable_workflow_02LPD34ABKNYC53bhvdbdyJKVnk3JPbMbDL": ""
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "target_type": "meraki.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02LBZJE7PQZVJ3crE33ELBrscM7zWeiugTw",
+          "workflow_name": "Meraki - Get Organization Devices"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OQYXWVXQ99B7fmEukmbQHhBINPMaGvP0U",
+        "name": "Read Table from JSON",
+        "title": "Read Table from JSON",
+        "type": "corejava.read_table_from_json",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "description": "Reading table data from JSON",
+          "display_name": "Read Table from JSON",
+          "input_json": "$activity.definition_activity_02OQYU21NHIZU0b5kycgVDk9e9ouWDZQrMR.output.variable_workflow_02LBZJE84NB1F75jMCnZjaIsHHmn1NBoO2y$",
+          "jsonpath_query": "$",
+          "persist_output": false,
+          "populate_columns": false,
+          "skip_execution": false,
+          "table_columns": [
+            {
+              "column_name": "serial",
+              "column_type": "string"
+            },
+            {
+              "column_name": "mac",
+              "column_type": "string"
+            },
+            {
+              "column_name": "productType",
+              "column_type": "string"
+            },
+            {
+              "column_name": "model",
+              "column_type": "string"
+            },
+            {
+              "column_name": "firmware",
+              "column_type": "string"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OR0EF0YG97Y2aENFy01QsyqFvkOFyyKRK",
+        "name": "Replace String",
+        "title": "Replace String",
+        "type": "core.replacestring",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "description": "Replace String",
+          "display_name": "Replace String",
+          "input_string": "$activity.definition_activity_02OQYXWVXQ99B7fmEukmbQHhBINPMaGvP0U.output.response_body$",
+          "replace_list": [
+            {
+              "replaced_string": "[{\"",
+              "replacement_string": ""
+            },
+            {
+              "replaced_string": "\"}]",
+              "replacement_string": ""
+            },
+            {
+              "replaced_string": "\":\"",
+              "replacement_string": ":"
+            },
+            {
+              "replaced_string": "\",\"",
+              "replacement_string": "\\n"
+            },
+            {
+              "replaced_string": "\"},{\"",
+              "replacement_string": "\\n\\n"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OQZH56FZGNE0psswzsZC47C4bEdfBkmgL",
+        "name": "HTTP Request",
+        "title": "Send Myself the inventory",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "allow_headers_redirect": false,
+          "body": "{\n    \"toPersonEmail\": \"bpounds@cisco.com\",\n    \"markdown\": \"Hey there!  Here is the inventory...\\n\\n$activity.definition_activity_02OR0EF0YG97Y2aENFy01QsyqFvkOFyyKRK.output.result_string$\"\n  }",
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer $env.variable_02OGQX51QLTVA3qBnYpuMwbEZcTPgpmmAzf.env.variable_02OGQX51QLTVA3qBnYpuMwbEZcTPgpmmAzf$"
+            }
+          ],
+          "description": "HTTP Request",
+          "display_name": "Send Myself the inventory",
+          "method": "POST",
+          "relative_url": "messages",
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": true,
+            "target_id": "definition_target_02OGPA819T3BU6poSKLd7DSVL5AUVEGe22b"
+          }
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OR1RHFF2BL74txchkEgp7r5L0Ji5L49cl",
+        "name": "Send to my Meraki BOT",
+        "title": "Send to my Meraki BOT",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Send to my Meraki BOT",
+          "input": {
+            "variable_workflow_02OR0ZJUAX0Y01mZ9HGFAOndjEQ9UG8eRM7": "Have a Nice Day!",
+            "variable_workflow_02OR12338E0HS4TtVEjNjYUuDyb61zMyfjI": "bpounds@cisco.com"
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": true,
+            "target_id": "definition_target_02OGPA819T3BU6poSKLd7DSVL5AUVEGe22b",
+            "target_type": "web-service.endpoint"
+          },
+          "workflow_id": "definition_workflow_02OR0W45BT4GG1uCjsGSMe4g1qFsL1UpVlL",
+          "workflow_name": "Send to my Meraki BOT"
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  },
+  "targets": {
+    "definition_target_02OASIW2D9EIK0VRpS9VyS2JSKwpbCIVXSW": {
+      "unique_name": "definition_target_02OASIW2D9EIK0VRpS9VyS2JSKwpbCIVXSW",
+      "name": "Meraki Launchpad",
+      "title": "Meraki Launchpad",
+      "type": "meraki.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "default_runtime_user_id": "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV",
+        "display_name": "Meraki Launchpad",
+        "host": "api.meraki.com",
+        "ignore_proxy": false,
+        "is_https_proxy": false,
+        "port": 443,
+        "protocol": "https"
+      }
+    },
+    "definition_target_02OGPA819T3BU6poSKLd7DSVL5AUVEGe22b": {
+      "unique_name": "definition_target_02OGPA819T3BU6poSKLd7DSVL5AUVEGe22b",
+      "name": "BrynBot",
+      "title": "BrynBot",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "disable_certificate_validation": false,
+        "display_name": "BrynBot",
+        "host": "webexapis.com",
+        "ignore_proxy": false,
+        "is_https_proxy": false,
+        "no_runtime_user": true,
+        "path": "/v1/",
+        "port": 443,
+        "protocol": "https"
+      }
+    }
+  },
+  "runtime_users": {
+    "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV": {
+      "unique_name": "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV",
+      "name": "LaunchPad Key",
+      "title": "LaunchPad Key",
+      "type": "runtime_user.meraki_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "api_key": "*****",
+        "display_name": "LaunchPad Key"
+      }
+    }
+  },
+  "variables": {
+    "variable_02OGQX51QLTVA3qBnYpuMwbEZcTPgpmmAzf": {
+      "unique_name": "variable_02OGQX51QLTVA3qBnYpuMwbEZcTPgpmmAzf",
+      "properties": {
+        "value": "*****",
+        "scope": "env",
+        "name": "BrynBot",
+        "type": "datatype.secure_string",
+        "is_required": false,
+        "display_on_wizard": false,
+        "is_invisible": false,
+        "variable_string_format": ""
+      },
+      "object_type": "variable"
+    }
+  },
+  "atomic_workflows": [
+    "definition_workflow_02LV5GIDUTY3X0WhuidM5ZWhkjL8wQCGAPq",
+    "definition_workflow_02L9TZH5W95870XebPF2g8kSyIYcawUvljX",
+    "definition_workflow_02LBZJE7PQZVJ3crE33ELBrscM7zWeiugTw",
+    "definition_workflow_02OR0W45BT4GG1uCjsGSMe4g1qFsL1UpVlL"
+  ],
+  "dependent_workflows": [
+    "definition_workflow_02LV5GIDUTY3X0WhuidM5ZWhkjL8wQCGAPq",
+    "definition_workflow_02L9TZH5W95870XebPF2g8kSyIYcawUvljX",
+    "definition_workflow_02LBZJE7PQZVJ3crE33ELBrscM7zWeiugTw",
+    "definition_workflow_02OR0W45BT4GG1uCjsGSMe4g1qFsL1UpVlL"
+  ]
+}
