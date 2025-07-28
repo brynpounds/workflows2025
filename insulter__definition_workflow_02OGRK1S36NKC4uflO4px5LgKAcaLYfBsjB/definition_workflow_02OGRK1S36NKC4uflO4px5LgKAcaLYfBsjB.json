@@ -1,0 +1,111 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02OGRK1S36NKC4uflO4px5LgKAcaLYfBsjB",
+    "name": "Shakespearian Insult Generator",
+    "title": "Shakespearian Insult Generator",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "output",
+          "name": "Shakespearian Insult",
+          "type": "datatype.string",
+          "is_required": false,
+          "display_on_wizard": false,
+          "is_invisible": false,
+          "variable_string_format": "text"
+        },
+        "unique_name": "variable_workflow_02OGT5YW3VKPU1DxbjxON8vteR66mWPRcFS",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "display_name": "Shakespearian Insult Generator",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "target_id": "definition_target_02OGRL1KDP5R72L444I0GaCoanDNp6AdjDa",
+        "execute_on_workflow_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02OGT4EPT02V73R6CsijhqeItjjG8PveVGv",
+        "name": "Execute Python Script",
+        "title": "Execute Python Script",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Execute Python Script",
+          "script": "import random\n\ninsults = [\n        ['artless', 'bawdy', 'beslubbering', 'bootless', 'churlish', 'cockered', 'clouted', 'craven', 'currish', 'dankish', 'dissembling', 'droning', 'errant', 'fawning', 'fobbing', 'froward', 'frothy', 'gleeking', 'goatish', 'gorbellied', 'impertinent', 'infectious', 'jarring', 'joggerheaded', 'lumpish', 'mammering', 'mangled', 'mewling', 'paunchy', 'pribbling', 'puking', 'puny', 'rank', 'reeky', 'roguish', 'ruftish', 'saucy', 'spleeny', 'spongy', 'surly', 'tottering', 'unmuzzled', 'vain', 'venomed', 'villainous', 'warped', 'wayward', 'weedy', 'yeasty'],\n        ['base-court', 'bat-forling', 'beef-witted', 'beetle-headed', 'boil-brained', 'clapper-clawed', 'clay-brained', 'common-kissing', 'crook-pated', 'dismal-dreaming', 'dizzy-eyed', 'doghearted', 'dread-bolted', 'earth-vexing', 'elf-skinned', 'fat-kidneyed', 'fen-sucked', 'flap-mothed', 'fly-bitten', 'folly-fallen', 'fool-born', 'fill-gorged', 'guts-griping', 'half-faced', 'hasty-witted', 'hedge-born', 'hell-hated', 'idle-headed', 'ill-breeding', 'ill-nurtured', 'knotty-pated', 'milk-livered', 'motley-minded', 'onion-eyed', 'plume-plucked', 'pottle-deep', 'pox-marked', 'reeling-ripe', 'rough-hewn', 'rude-growing', 'rump-faced', 'shard-borne', 'sheep-biting', 'spur-galled', 'swag-bellied', 'tardy-gaited', 'tickle-brained', 'toad-spotted', 'unchin-snoted', 'weather-bitten'],\n        ['apple-john', 'baggage', 'barnacle', 'bladder', 'boar-pig', 'bugbear', 'bum-bailey', 'canket-blossom', 'clack-dish', 'clotpole', 'coxcomb', 'codpiece', 'death-token', 'dewberry', 'flap-dragon', 'flax-wench', 'flirt-gill', 'foot-licker', 'futilarrian', 'giglet', 'gudgeon', 'haggard', 'harpy', 'hedge-pig', 'horn-beast', 'hugger-mugger', 'joithead', 'lewduster', 'lout', 'maggot-pie', 'malt-worm', 'mammet', 'measle', 'minnow', 'miscreant', 'moldwarp', 'mumble-news', 'nut-hook', 'pigeon-egg', 'pignut', 'puttock', 'pumbion', 'ratsbane', 'scut', 'skainsmate', 'strumpot', 'varlot', 'vassal', 'wheyface', 'wagtail']\n    ]\n\nrand1 = random.randint(0, len(insults[0]) - 1)\nrand2 = random.randint(0, len(insults[1]) - 1)\nrand3 = random.randint(0, len(insults[2]) - 1)\n\ninsult = f\"Thou {insults[0][rand1]} {insults[1][rand2]} {insults[2][rand3]}!\"\n",
+          "script_queries": [
+            {
+              "script_query": "insult",
+              "script_query_name": "Insult",
+              "script_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OGT62JS23314cBlnyUty3kGzFrnFGnWdr",
+        "name": "Set Variables",
+        "title": "Set Variables",
+        "type": "core.set_multiple_variables",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "Set Variables",
+          "display_name": "Set Variables",
+          "skip_execution": false,
+          "variables_to_update": [
+            {
+              "variable_to_update": "$workflow.definition_workflow_02OGRK1S36NKC4uflO4px5LgKAcaLYfBsjB.output.variable_workflow_02OGT5YW3VKPU1DxbjxON8vteR66mWPRcFS$",
+              "variable_value_new": "$activity.definition_activity_02OGT4EPT02V73R6CsijhqeItjjG8PveVGv.output.script_queries.Insult$"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  },
+  "targets": {
+    "definition_target_02OGRL1KDP5R72L444I0GaCoanDNp6AdjDa": {
+      "unique_name": "definition_target_02OGRL1KDP5R72L444I0GaCoanDNp6AdjDa",
+      "name": "Shakespearian Insulter",
+      "title": "Shakespearian Insulter",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "description": "",
+        "disable_certificate_validation": true,
+        "display_name": "Shakespearian Insulter",
+        "host": "codepo8.github.io",
+        "ignore_proxy": false,
+        "is_https_proxy": false,
+        "no_runtime_user": true,
+        "path": "shakespeare-insult-generator/",
+        "port": 443,
+        "protocol": "https"
+      }
+    }
+  }
+}
