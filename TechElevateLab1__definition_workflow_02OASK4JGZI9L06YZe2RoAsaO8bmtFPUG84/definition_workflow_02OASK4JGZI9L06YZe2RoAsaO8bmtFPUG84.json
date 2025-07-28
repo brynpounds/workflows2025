@@ -1,0 +1,172 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_02OASK4JGZI9L06YZe2RoAsaO8bmtFPUG84",
+    "name": "Tech Elevate 1 - Sleep",
+    "title": "Tech Elevate 1 - Sleep",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": null,
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "display_name": "Tech Elevate 1 - Sleep",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "meraki.endpoint",
+        "target_id": "definition_target_02OASIW2D9EIK0VRpS9VyS2JSKwpbCIVXSW",
+        "execute_on_workflow_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_02OASLNO1VEJ40bxV2jislnk7AcoHvAZNRy",
+        "name": "Meraki - Get Organizations",
+        "title": "Meraki - Get Organizations",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "description": "**Cisco Meraki - Get Organizations**\nRetrieve a list of organizations that the authenticated user has access to within their Meraki account. \nAn organization in Meraki represents a logical grouping of networks, devices, and settings that can be managed collectively.\n\n**Target:** A Meraki Endpoint using HTTPS \"api.meraki.com\" port 443 and no path.\n\n**Account Key:** Meraki User API Key. API Key can be generated from Merkai Dashboard -\u003e User Profile -\u003e API Access.",
+          "display_name": "Meraki - Get Organizations",
+          "input": {
+            "variable_workflow_02LXK9KUOD0MH4qj4j062vm12gYmFb9y5N0": 100,
+            "variable_workflow_02LXKBG6HGMSD1YojnHQ3bM2cT6mP8A02A9": "",
+            "variable_workflow_02LXKCCX4AREX6odSHkvY5oECunJtqcLahK": ""
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "target_type": "meraki.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02LV5GIDUTY3X0WhuidM5ZWhkjL8wQCGAPq",
+          "workflow_name": "Meraki - Get Organizations"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OASMPVSV4WY09vswZt0mVL2m1mCcWd82f",
+        "name": "JSONPath Query",
+        "title": "JSONPath Query",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "description": "JSONPath Query to get value in JSON",
+          "display_name": "JSONPath Query",
+          "input_json": "$activity.definition_activity_02OASLNO1VEJ40bxV2jislnk7AcoHvAZNRy.output.variable_workflow_02LXKZA6725S35QBWMZCg1AlZnT11mbSFQi$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "[0][\"id\"]",
+              "jsonpath_query_name": "test",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OG48R562ZC63mOQkiGwZZkABrzlzdajNc",
+        "name": "Sleep",
+        "title": "Sleep",
+        "type": "core.sleep",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "Sleep",
+          "display_name": "Sleep",
+          "skip_execution": false,
+          "sleep_interval": 10
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_02OASSXIT85856oCR21jf8sX87Ceiwzqre8",
+        "name": "Meraki - Get Organization Networks",
+        "title": "Meraki - Get Organization Networks",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": false,
+          "description": "**Cisco Meraki - Networks - Get Organization Networks**\n\nList the networks that the user has privileges on in an organization\n\n**Target:** A Meraki Endpoint using HTTPS \"api.meraki.com\" port 443 and no path.\n\n**Account Key:** Meraki User API Key. API Key can be generated from Merkai Dashboard -\u003e User Profile -\u003e API Access.\n\nSteps:\n[] Sends Get Network request to Meraki\n[] Check if the request was successful:\n[]\u003e If it was, attempt to extract the results and set the output variables\n[]\u003e If it wasn't, return the error and marks the workflow as failed.\n\nNOTE: Empty attributes in the request are removed from the payload before sending to Meraki. \n\nMore information about this API: https://developer.cisco.com/meraki/api-v1/get-organization-networks/",
+          "display_name": "Meraki - Get Organization Networks",
+          "input": {
+            "variable_workflow_02L9TZH6C81473IDtFQ0NIzW3jmXrgchtN9": "$activity.definition_activity_02OASMPVSV4WY09vswZt0mVL2m1mCcWd82f.output.jsonpath_queries.test$",
+            "variable_workflow_02LEUL5GOHN9T53T7jFQx3T2Yo04p5Xuz0r": false,
+            "variable_workflow_02LNK5WW0RD2A20mG7v1G7gsyE2N2RrKdQd": "",
+            "variable_workflow_02LNK5WW0RTCB1AXbOwJOBVWvUx1wdyKtkt": "withAnyTags",
+            "variable_workflow_02LNK5WW0S5E21Q9biFSXTiLbHr7cWP2K7y": false,
+            "variable_workflow_02LNK5WW0SE2H1zmchhUHyfX7L0XGvKmB7W": 1000,
+            "variable_workflow_02LNK5WW0SM7R5SjIvnnytN6vYzR7wfDHeE": [],
+            "variable_workflow_02LNK5WW0STMX38BXiY2IvPQoHQliJHSCgE": [],
+            "variable_workflow_02LNK5WW0T0NX26NyApdlTn355uYJwcQGqW": "",
+            "variable_workflow_02LNK5WW0T92U1HJd1sxzFrmVvwxy7NVaQn": ""
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "target_type": "meraki.endpoint",
+            "use_workflow_target": true
+          },
+          "workflow_id": "definition_workflow_02L9TZH5W95870XebPF2g8kSyIYcawUvljX",
+          "workflow_name": "Meraki - Get Organization Networks"
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_1BMfMXSnJMyt5Ihqi7rWJr5N8cf"
+    ]
+  },
+  "targets": {
+    "definition_target_02OASIW2D9EIK0VRpS9VyS2JSKwpbCIVXSW": {
+      "unique_name": "definition_target_02OASIW2D9EIK0VRpS9VyS2JSKwpbCIVXSW",
+      "name": "Meraki Launchpad",
+      "title": "Meraki Launchpad",
+      "type": "meraki.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "default_runtime_user_id": "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV",
+        "display_name": "Meraki Launchpad",
+        "host": "api.meraki.com",
+        "ignore_proxy": false,
+        "is_https_proxy": false,
+        "port": 443,
+        "protocol": "https"
+      }
+    }
+  },
+  "runtime_users": {
+    "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV": {
+      "unique_name": "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV",
+      "name": "LaunchPad Key",
+      "title": "LaunchPad Key",
+      "type": "runtime_user.meraki_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "api_key": "*****",
+        "display_name": "LaunchPad Key"
+      }
+    }
+  },
+  "atomic_workflows": [
+    "definition_workflow_02LV5GIDUTY3X0WhuidM5ZWhkjL8wQCGAPq",
+    "definition_workflow_02L9TZH5W95870XebPF2g8kSyIYcawUvljX"
+  ],
+  "dependent_workflows": [
+    "definition_workflow_02LV5GIDUTY3X0WhuidM5ZWhkjL8wQCGAPq",
+    "definition_workflow_02L9TZH5W95870XebPF2g8kSyIYcawUvljX"
+  ]
+}
