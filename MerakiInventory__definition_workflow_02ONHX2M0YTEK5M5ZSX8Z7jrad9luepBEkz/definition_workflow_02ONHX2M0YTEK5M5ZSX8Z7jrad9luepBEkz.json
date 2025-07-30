@@ -337,6 +337,54 @@
         "object_type": "definition_activity"
       },
       {
+        "unique_name": "definition_activity_02OR5BQHK1DNE5w1s1eyacDLNAXPNpkdPtL",
+        "name": "Request Approval",
+        "title": "Request Approval",
+        "type": "task.request_approval",
+        "base_type": "activity",
+        "properties": {
+          "approval_choices_holder": {
+            "approval_choices": [
+              "Approve",
+              "Reject"
+            ],
+            "is_custom_approval_choices": false,
+            "is_default_approval_choices": true
+          },
+          "approval_title": "Meraki Inventory to your Webex Bot?",
+          "assignee_roles": [
+            "admin"
+          ],
+          "body_text": "DO you want to send the Meraki Inventory to your Webex Bot?",
+          "continue_on_failure": false,
+          "description": "Request Approval",
+          "display_name": "Request Approval",
+          "due_date": {
+            "is_relative_time": true,
+            "relative_time": {
+              "duration": 72,
+              "time_units": "hours"
+            },
+            "set_due_date": true
+          },
+          "expiration_date": {
+            "is_relative_time": true,
+            "relative_time": {
+              "duration": 72,
+              "time_units": "hours"
+            }
+          },
+          "expiration_status": "Expired",
+          "minimum_approvals": 1,
+          "priority": "normal",
+          "skip_execution": false,
+          "task_owner": "$workflow.definition_workflow_02ONHX2M0YTEK5M5ZSX8Z7jrad9luepBEkz.output.started_by$",
+          "task_requestor": "$workflow.definition_workflow_02ONHX2M0YTEK5M5ZSX8Z7jrad9luepBEkz.output.started_by$",
+          "wait_for_request_approval_response": true
+        },
+        "object_type": "definition_activity"
+      },
+      {
         "unique_name": "definition_activity_02OQZH56FZGNE0psswzsZC47C4bEdfBkmgL",
         "name": "HTTP Request",
         "title": "Send Myself the inventory",
@@ -412,7 +460,8 @@
       "base_type": "target",
       "object_type": "definition_target",
       "properties": {
-        "default_runtime_user_id": "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV",
+        "default_runtime_user_id": "definition_runtime_user_02ORP3OL2STLA3N35AdDeJxpzIbbIcbj6q8",
+        "description": "",
         "display_name": "Meraki Launchpad",
         "host": "api.meraki.com",
         "ignore_proxy": false,
@@ -442,16 +491,16 @@
     }
   },
   "runtime_users": {
-    "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV": {
-      "unique_name": "definition_runtime_user_02OASIJ3XPIF05AA5CXjFYZrYeNVCNbjNFV",
-      "name": "LaunchPad Key",
-      "title": "LaunchPad Key",
+    "definition_runtime_user_02ORP3OL2STLA3N35AdDeJxpzIbbIcbj6q8": {
+      "unique_name": "definition_runtime_user_02ORP3OL2STLA3N35AdDeJxpzIbbIcbj6q8",
+      "name": "Bryn Meraki API Key",
+      "title": "Bryn Meraki API Key",
       "type": "runtime_user.meraki_credentials",
       "base_type": "runtime_user",
       "object_type": "definition_runtime_user",
       "properties": {
         "api_key": "*****",
-        "display_name": "LaunchPad Key"
+        "display_name": "Bryn Meraki API Key"
       }
     }
   },
